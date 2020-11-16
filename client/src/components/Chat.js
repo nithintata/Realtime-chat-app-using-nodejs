@@ -19,7 +19,7 @@ const Chat = ({ location }) => {
     const [users, setUsers] = useState('');
     const history = useHistory();
 
-    const socketUrl = 'localhost:5000';
+    const socketUrl = 'https://chatapp-in.herokuapp.com/';
 
     useEffect (() => {
         const { name, room } = queryString.parse(location.search);

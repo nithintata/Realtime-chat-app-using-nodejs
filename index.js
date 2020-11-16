@@ -13,15 +13,16 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
 app.use(router);
 app.use(cors());
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  })
-}
 
 io.on('connection', (socket) => {
     console.log(`New user connected with id: ${socket.id}`);
